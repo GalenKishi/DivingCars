@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementCar : MonoBehaviour
+public class ControladorTruck : MonoBehaviour
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -34,6 +34,7 @@ public class MovementCar : MonoBehaviour
         HandleSteering();
         UpdateWheels();
     }
+
     private void GetInput()
     {
         horizontalInput = Input.GetAxis(HORIZONTAL);
@@ -46,12 +47,13 @@ public class MovementCar : MonoBehaviour
         FrontLeftWheelc.motorTorque = verticalInput * motorforce;
         FrontRightWheelc.motorTorque = verticalInput * motorforce;
         currentBreakForce = isBreaking ? breakforce : 0f;
-
         FrontRightWheelc.brakeTorque = currentBreakForce;
         FrontLeftWheelc.brakeTorque = currentBreakForce;
         RearRightWheelc.brakeTorque = currentBreakForce;
         RearLeftWheelc.brakeTorque = currentBreakForce;
+
     }
+
 
     private void HandleSteering()
     {
@@ -77,4 +79,3 @@ public class MovementCar : MonoBehaviour
         wheelTransform.position = pos;
     }
 }
-
