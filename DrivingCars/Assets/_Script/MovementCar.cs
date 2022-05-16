@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControladorBus : MonoBehaviour
+public class MovementCar : MonoBehaviour
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -20,16 +20,12 @@ public class ControladorBus : MonoBehaviour
     [SerializeField] private WheelCollider FrontLeftWheelc;
     [SerializeField] private WheelCollider FrontRightWheelc;
     [SerializeField] private WheelCollider RearLeftWheelc;
-    //[SerializeField] private WheelCollider RearALeftWheelc;
     [SerializeField] private WheelCollider RearRightWheelc;
-    //[SerializeField] private WheelCollider RearARightWheelc;
 
     [SerializeField] private Transform FrontLeftWheelt;
     [SerializeField] private Transform FrontRightWheelt;
-    //[SerializeField] private Transform RearALeftWheelt;
     [SerializeField] private Transform RearLeftWheelt;
     [SerializeField] private Transform RearRightWheelt;
-    //[SerializeField] private Transform RearARightWheelt;
 
     private void FixedUpdate()
     {
@@ -38,11 +34,10 @@ public class ControladorBus : MonoBehaviour
         HandleSteering();
         UpdateWheels();
     }
-
     private void GetInput()
     {
         horizontalInput = Input.GetAxis(HORIZONTAL);
-        verticalInput = Input.GetAxis(VERTICAL) * -1;
+        verticalInput = Input.GetAxis(VERTICAL);
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
@@ -51,12 +46,11 @@ public class ControladorBus : MonoBehaviour
         FrontLeftWheelc.motorTorque = verticalInput * motorforce;
         FrontRightWheelc.motorTorque = verticalInput * motorforce;
         currentBreakForce = isBreaking ? breakforce : 0f;
+
         FrontRightWheelc.brakeTorque = currentBreakForce;
         FrontLeftWheelc.brakeTorque = currentBreakForce;
         RearRightWheelc.brakeTorque = currentBreakForce;
-        //RearARightWheelc.brakeTorque = currentBreakForce; // Llanta secundaria
         RearLeftWheelc.brakeTorque = currentBreakForce;
-        //RearALeftWheelc.brakeTorque = currentBreakForce; // Llanta secundaria
     }
 
     private void HandleSteering()
@@ -71,9 +65,7 @@ public class ControladorBus : MonoBehaviour
         UpdateSingleWheels(FrontLeftWheelc, FrontLeftWheelt);
         UpdateSingleWheels(FrontRightWheelc, FrontRightWheelt);
         UpdateSingleWheels(RearLeftWheelc, RearLeftWheelt);
-        //UpdateSingleWheels(RearALeftWheelc, RearALeftWheelt);
         UpdateSingleWheels(RearRightWheelc, RearRightWheelt);
-        //UpdateSingleWheels(RearARightWheelc, RearARightWheelt);
     }
 
     private void UpdateSingleWheels(WheelCollider wheelCollider, Transform wheelTransform)
@@ -85,3 +77,4 @@ public class ControladorBus : MonoBehaviour
         wheelTransform.position = pos;
     }
 }
+
